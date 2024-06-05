@@ -1,65 +1,113 @@
+/* Reset some basic styles */
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, figure, blockquote {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  margin: 0;
-  background: linear-gradient(180deg, rgb(117, 81, 194), rgb(255, 255, 255));
-  display: flex;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  height: 100vh;
-  width: 100vw;
-  justify-content: center;
-  align-items: center;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 20px;
 }
 
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-  color: white;
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
-button:hover {
-  border-color: #646cff;
+
+button, input[type="submit"], .amplify-button, .amplify-button-group > button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 10px; /* Adjusted margin */
+    font-size: 16px;
+    color: #fff;
+    background: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+button:hover, input[type="submit"]:hover, .amplify-button:hover, .amplify-button-group > button:hover {
+    background: #2980b9;
+}
+
+input[type="text"], input[type="password"], textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+    border-color: #3498db;
+    outline: none;
 }
 
 ul {
-  padding-inline-start: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  margin: 8px 0;
-  border: 1px solid black;
-  gap: 1px;
-  background-color: black;
-  border-radius: 8px;
-  overflow: auto;
+    list-style: none;
+    padding: 0;
 }
 
 li {
-  background-color: white;
-  padding: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 
-li:hover {
-  background: #dadbf9;
+li:last-child {
+    border-bottom: none;
 }
 
-a {
-  font-weight: 800;
-  text-decoration: none;
+.amplify-text {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+.amplify-view {
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Added gap */
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    button, input[type="submit"], .amplify-button, .amplify-button-group > button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
 }
