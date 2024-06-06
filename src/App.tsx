@@ -119,8 +119,8 @@ function App() {
       )}
       {currentPage === 3 && (
         <div>
-          <ScoreList scores={scores}/>
           <StepButtons onStepChange={setCurrentPage}/>
+          <ScoreList scores={scores}/>
         </div>
       )}
     </main>
