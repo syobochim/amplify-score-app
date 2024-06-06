@@ -22,7 +22,7 @@ export const ScoreList: React.FC<ScoreListProps> = ({scores}) => {
   });
 
   return (
-    <Table highlightOnHover={true}>
+    <Table highlightOnHover={true} margin="15px">
       <TableHead>
         <TableRow>
           <TableCell as="th">Ranking</TableCell>
