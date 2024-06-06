@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input } from "@aws-amplify/ui-react";
+import { Button, Input, Text } from "@aws-amplify/ui-react";
 
 interface NameInputProps {
   onSubmit: (name: string) => void;
@@ -16,6 +16,7 @@ export const NameInput: React.FC<NameInputProps> = ({onSubmit}) => {
 
   return (
     <div>
+      <Text fontSize="2em">お名前を入力してください</Text>
       <Input
         placeholder="Name"
         value={name}
