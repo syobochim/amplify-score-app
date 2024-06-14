@@ -6,34 +6,49 @@ interface StopwatchProps {
   onComplete: (time: number) => void;
 }
 
-const localStorageKey: string = "stopwatchTime"
+const localStorageKey: string = "stopwatchTime";
 
 export const Stopwatch: React.FC<StopwatchProps> = ({onComplete}) => {
   const [time, setTime] = useState(() => {
-    // localStorageから取得する
     const savedTime = localStorage.getItem(localStorageKey);
-    return savedTime ? parseInt(savedTime, 10) : 0
+    return savedTime ? parseInt(savedTime, 10) : 0;
   });
   const [isRunning, setIsRunning] = useState(false);
-  const [intervalId, setIntervalId] = useState<number | undefined>(undefined)
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [lastTime, setLastTime] = useState<number>(0);
 
   useEffect(() => {
-    let interval: number;
+    let animationFrameId: number | undefined;
+
+    const updateTimer = () => {
+      if (isRunning && startTime !== null) {
+        const currentTime = Date.now();
+        setTime(lastTime + (currentTime - startTime));
+        animationFrameId = requestAnimationFrame(updateTimer);
+      }
+    };
+
     if (isRunning) {
-      interval = window.setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
-      setIntervalId(interval)
+      setStartTime(Date.now());
+      animationFrameId = requestAnimationFrame(updateTimer);
     } else {
-      window.clearInterval(intervalId);
-      setIntervalId(undefined)
+      if (startTime !== null) {
+        setLastTime((prevLastTime) => prevLastTime + (Date.now() - startTime));
+      }
+      if (animationFrameId !== undefined) {
+        cancelAnimationFrame(animationFrameId);
+      }
     }
-    return () => clearInterval(interval);
-  }, [isRunning]);
 
-  // ブラウザリロードしてもいいように、localStorageへ保存
+    return () => {
+      if (animationFrameId !== undefined) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [isRunning, startTime, lastTime]);
+
   useEffect(() => {
-    localStorage.setItem(localStorageKey, time.toString())
+    localStorage.setItem(localStorageKey, time.toString());
   }, [time]);
 
   const timerStart = () => {
@@ -46,10 +61,10 @@ export const Stopwatch: React.FC<StopwatchProps> = ({onComplete}) => {
 
   const timerStop = () => {
     setIsRunning(false);
-    onComplete(time)
-  }
+    onComplete(time);
+  };
 
-  const {formatTime} = useTimeFormatter()
+  const {formatTime} = useTimeFormatter();
 
   return (
     <View textAlign="center">
