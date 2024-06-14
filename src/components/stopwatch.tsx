@@ -15,7 +15,7 @@ export const Stopwatch: React.FC<StopwatchProps> = ({onComplete}) => {
   });
   const [isRunning, setIsRunning] = useState(false);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [lastTime, setLastTime] = useState<number>(0);
+  const [accumulatedTime, setAccumulatedTime] = useState<number>(0);
 
   useEffect(() => {
     let animationFrameId: number | undefined;
@@ -23,7 +23,7 @@ export const Stopwatch: React.FC<StopwatchProps> = ({onComplete}) => {
     const updateTimer = () => {
       if (isRunning && startTime !== null) {
         const currentTime = Date.now();
-        setTime(lastTime + (currentTime - startTime));
+        setTime(accumulatedTime + (currentTime - startTime));
         animationFrameId = requestAnimationFrame(updateTimer);
       }
     };
@@ -33,7 +33,7 @@ export const Stopwatch: React.FC<StopwatchProps> = ({onComplete}) => {
       animationFrameId = requestAnimationFrame(updateTimer);
     } else {
       if (startTime !== null) {
-        setLastTime((prevLastTime) => prevLastTime + (Date.now() - startTime));
+        setAccumulatedTime((prevAccumulatedTime) => prevAccumulatedTime + (Date.now() - startTime));
       }
       if (animationFrameId !== undefined) {
         cancelAnimationFrame(animationFrameId);
@@ -45,7 +45,7 @@ export const Stopwatch: React.FC<StopwatchProps> = ({onComplete}) => {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [isRunning, startTime, lastTime]);
+  }, [isRunning, startTime, accumulatedTime]);
 
   useEffect(() => {
     localStorage.setItem(localStorageKey, time.toString());
@@ -62,6 +62,8 @@ export const Stopwatch: React.FC<StopwatchProps> = ({onComplete}) => {
   const timerStop = () => {
     setIsRunning(false);
     onComplete(time);
+    setAccumulatedTime(0);
+    setTime(0);
   };
 
   const {formatTime} = useTimeFormatter();
